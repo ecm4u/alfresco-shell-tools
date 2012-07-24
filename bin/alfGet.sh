@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x
+#set -x
 # param section
 
 function __show_global_options() {
@@ -51,6 +51,33 @@ function help() {
   __show_command_explanation
 }
 
+#
+# does url encoding, treats all parameters as a single one
+#
+function __url_encode_param() {
+# see here for credits http://stackoverflow.com/questions/296536/urlencode-from-a-bash-script
+  local string=$@
+  local strlen=${#string}
+  local encoded=""
+
+  for (( pos=0 ; pos<strlen ; pos++ )); do
+     c=${string:$pos:1}
+     case "$c" in
+        [-_.~a-zA-Z0-9] ) o="${c}" ;;
+        * )               printf -v o '%%%02x' "'$c"
+     esac
+     encoded+="${o}"
+  done
+#  echo "${encoded}"    # You can either set a return variable (FASTER) 
+  REPLY="${encoded}"   #+or echo the result (EASIER)... or both... :p
+}
+
+function __url_encode_path() {
+
+
+}
+
+
 # global options
 ALF_UID=$ALFTOOLS_USER
 ALF_PW=$ALFTOOLS_PASSWORD
@@ -95,7 +122,6 @@ done
 
 # shift away parsed args
 shift $((OPTIND-1))
-
 # command arguments
 ALF_URL=$1
 
@@ -108,8 +134,11 @@ then
   echo "  curl opts: $ALF_CURL_OPTS"
 fi
 
-
-curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW $ALF_EP/s/node/path/$ALF_URL
+__url_encode_param $ALF_URL
+ENCODED_URL=$REPLY
+echo $ENCODED_URL
+exit 
+curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW $ALF_EP/webdav/$ENCODED_URL
 
 
 
