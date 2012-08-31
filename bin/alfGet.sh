@@ -54,7 +54,7 @@ function help() {
 #
 # does url encoding, treats all parameters as a single one
 #
-function __url_encode_param() {
+function __encode_url_param() {
 # see here for credits http://stackoverflow.com/questions/296536/urlencode-from-a-bash-script
   local string=$@
   local strlen=${#string}
@@ -69,12 +69,45 @@ function __url_encode_param() {
      encoded+="${o}"
   done
 #  echo "${encoded}"    # You can either set a return variable (FASTER) 
+  ENCODED_PARAM="${encoded}"   #+or echo the result (EASIER)... or both... :p
+}
+
+function __encode_url_path() {
+# see here for credits http://stackoverflow.com/questions/296536/urlencode-from-a-bash-script
+  local string=$@
+  local strlen=${#string}
+  local encoded=""
+
+  for (( pos=0 ; pos<strlen ; pos++ )); do
+     c=${string:$pos:1}
+     case "$c" in
+        [/-_.~a-zA-Z0-9] ) o="${c}" ;;
+        * )               printf -v o '%%%02x' "'$c"
+     esac
+     encoded+="${o}"
+  done
+#  echo "${encoded}"    # You can either set a return variable (FASTER) 
   REPLY="${encoded}"   #+or echo the result (EASIER)... or both... :p
 }
 
-function __url_encode_path() {
+function __is_noderef() {
+  local alfUrl=$@
+  local regex="^[a-zA-Z]+://[a-zA-Z0-9]+/.*$" 
 
+  if [[ $alfUrl =~ $regex ]]
+  then
+    true
+  else
+   false
+  fi
+}
 
+function __split_noderef() {
+  local nodeRef=$@
+
+  UUID=$(echo $nodeRef | perl -pe 'print $_;s|^[^:]+://[^/]+/||')
+  PROTOCOL=${nodeRef%%:*}
+  STORE=`echo $nodeRef | perl -pe 's|^[^:]+://([^/]+)/.*|$1|'`
 }
 
 
@@ -134,11 +167,21 @@ then
   echo "  curl opts: $ALF_CURL_OPTS"
 fi
 
-__url_encode_param $ALF_URL
-ENCODED_URL=$REPLY
-echo $ENCODED_URL
-exit 
-curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW $ALF_EP/webdav/$ENCODED_URL
+
+if __is_noderef $ALF_URL
+then
+  __split_noderef $ALF_URL
+  __encode_url_param $UUID
+  ENC_UUID=$ENCODED_PARAM
+  __encode_url_param $STORE
+  ENC_STORE=$ENCODED_PARAM
+  __encode_url_param $PROTOCOL
+  ENC_PROTOCOL=$ENCODED_PARAM
+ 
+  curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW $ALF_EP/service/api/node/$ENC_PROTOCOL/$ENC_STORE/$ENC_UUID
+else
+  curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW $ALF_EP/webdav/$ENCODED_URL
+fi
 
 
 
