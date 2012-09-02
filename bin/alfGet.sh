@@ -7,6 +7,34 @@
 ALFTOOLS_BIN=`dirname "$0"`
 . $ALFTOOLS_BIN/alfToolsLib.sh
 
+# intended to be replaced in command script by a command specific output
+function __show_command_options() {
+  echo "  command options:"
+  echo "    no command specific options"
+
+}
+
+# intended to be replaced in command script
+function __show_command_arguments() {
+  echo "  command arguments:"
+  echo "    ALFURL          pointer to an Alfesco document"
+}
+
+
+# intended to be replaced in command script
+function __show_command_explanation() {
+  echo "  command explanation:"
+  echo "    the alfGet.sh command downloads a file from Alfresco and prints its contents to stdout"
+  echo
+  echo "  usage examples:"
+  echo
+  echo "  ./alfGet.sh some/path/goto.pdf > goto.pdf"
+  echo "     --> downloads the file goto.pdf and saves it to the local disk."
+  echo "  ./alfGet.sh workspace://SpacesStore/1234-1234-123-1234 > myfile.docx"
+  echo "     --> downloads the content given with the given noderef and cm:content property and saves it contents to the local file myfile.docx"
+}
+
+
 # command local options
 ALF_CONTENT_PROP=cm:content
 
