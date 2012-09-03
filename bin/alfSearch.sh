@@ -9,7 +9,11 @@ ALFTOOLS_BIN=`dirname "$0"`
 
 function __show_command_options() {
   echo "  command options:"
-  echo "    no command specific options"
+  echo "    -p property name    which property of each search result node should be printed to stdout."
+  echo "                        Possible values are nodeRef(default), name, path, type, displayName, title,"
+  echo "                        description, modifiedOn, modifiedBy, modifiedByUser, size, mimetype, path"
+  echo "    -m [property|json]  output mode: 'property' (default) prints the value of the property given by -p."
+  echo "                        Mode 'json' prints the whole result set as a json object."
   echo
 }
 
@@ -47,8 +51,10 @@ function __show_command_explanation() {
 
 
 # command option defaults
-ALF_CMD_OPTIONS="${ALF_GLOBAL_OPTIONS}p:"
+ALF_CMD_OPTIONS="${ALF_GLOBAL_OPTIONS}p:m:"
 ALF_PROPERTY="nodeRef"
+# output mode is either property or the full json output
+ALF_OUTPUT_MODE="property"
 
 function __process_cmd_option() {
   local OPTNAME=$1
@@ -58,6 +64,8 @@ function __process_cmd_option() {
   in
     p)
       ALF_PROPERTY=$OPTARG;;
+    m)
+      ALF_OUTPUT_MODE=$OPTARG;;
   esac
 }
 
@@ -79,6 +87,7 @@ then
   echo "  endpoint: $ALF_EP"
   echo "  curl opts: $ALF_CURL_OPTS"
   echo "  property: $ALF_PROPERTY"
+  echo "  output mode: $ALF_OUTPUT_MODE"
 fi
 
 if [[ "$ALF_SEARCHTERM" == "" ]]
@@ -94,8 +103,16 @@ ENC_TERM=$ENCODED_PARAM
 __encode_url_param 'workspace://SpacesStore/company/home'
 ENC_ROOT_NODE=$ENCODED_PARAM
 
-curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW "$ALF_EP/service/slingshot/search?site=&term=$ENC_TERM&repo=true&rootNode=$ENC_ROOT_NODE" | $ALF_JSHON -e items -a -e $ALF_PROPERTY -u
-
+if [[ "$ALF_OUTPUT_MODE" == "property" ]]
+then
+  curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW "$ALF_EP/service/slingshot/search?site=&term=$ENC_TERM&repo=true&rootNode=$ENC_ROOT_NODE" | $ALF_JSHON -e items -a -e $ALF_PROPERTY -u
+elif [[ "$ALF_OUTPUT_MODE" == "json" ]]
+then
+  curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW "$ALF_EP/service/slingshot/search?site=&term=$ENC_TERM&repo=true&rootNode=$ENC_ROOT_NODE"
+else
+  echo "invalid output mode: $ALF_OUTPUT_MODE"
+  exit 1
+fi
 
 exit
 GET /alfresco/s/slingshot/search?site=&term=node&tag=&maxResults=251&sort=cm%3Aname&query=&repo=true&rootNode=alfresco%3A%2F%2Fcompany%2Fhome&alf_ticket=TICKET_58b09f1c0de7c7e114dd5cf3104bf2fec8e26d5a HTTP/1.1
