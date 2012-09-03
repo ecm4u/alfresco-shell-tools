@@ -27,21 +27,15 @@ function __show_command_options() {
 # intended to be replaced in command script
 function __show_command_arguments() {
   echo "  command arguments:"
-  echo "    ALFURL          pointer to an Alfesco document"
+  echo "     no command arguments"
 }
 
 
 # intended to be replaced in command script
 function __show_command_explanation() {
   echo "  command explanation:"
-  echo "    the alfGet.sh command downloads a file from Alfresco and prints its contents to stdout"
   echo
-  echo "  usage examples:"
-  echo
-  echo "  ./alfGet.sh some/path/goto.pdf > goto.pdf"
-  echo "     --> downloads the file goto.pdf and saves it to the local disk."
-  echo "  ./alfGet.sh workspace://SpacesStore/1234-1234-123-1234 > myfile.docx"
-  echo "     --> downloads the content given with the given noderef and cm:content property and saves it contents to the local file myfile.docx"
+  echo "    this command has no explanation so far"
 }
 
 function help() {
@@ -117,8 +111,17 @@ function __split_noderef() {
   STORE=`echo $nodeRef | perl -pe 's|^[^:]+://([^/]+)/.*|$1|'`
 }
 
-function __process_global_options() {
-  while getopts "vhE:U:P:C:" OPTNAME
+function __process_cmd_option() {
+  local OPTNAME=$1
+  local OPTARG=$2
+
+  echo "cmd opts: $OPTNAME=$OPTARG"
+
+
+}
+
+function __process_options() {
+  while getopts $ALF_CMD_OPTIONS OPTNAME
   do
 #  echo "OPTARG=$OPTARG OPTIND=$OPTIND OPTNAME=$OPTNAME"
 
@@ -138,8 +141,7 @@ function __process_global_options() {
     v)
       ALF_VERBOSE=true;;
     ?)
-      help
-      exit;;
+      __process_cmd_option $OPTNAME $OPTARG
   esac
   done
 
@@ -148,6 +150,8 @@ function __process_global_options() {
 
 
 # global options
+ALF_GLOBAL_OPTIONS=":vhE:U:P:C:"
+ALF_CMD_OPTIONS=$ALF_GLOBAL_OPTIONS
 
 # read environment vars
 ALF_UID=$ALFTOOLS_USER
@@ -155,6 +159,9 @@ ALF_PW=$ALFTOOLS_PASSWORD
 ALF_EP=$ALFTOOLS_ENDPOINT
 ALF_VERBOSE=false
 ALF_CURL_OPTS=$ALFTOOLS_CURL_OPTS
+
+
+ALF_JSHON=./jshon
 
 
 # init curl options. Note: -f is important to signal communication errors
