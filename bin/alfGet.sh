@@ -17,9 +17,8 @@ function __show_command_options() {
 # intended to be replaced in command script
 function __show_command_arguments() {
   echo "  command arguments:"
-  echo "    ALFURL          pointer to an Alfesco document"
+  echo "    ALFURL          pointer to an Alfesco document. Using - as the argument reads the first line from stdin."
 }
-
 
 # intended to be replaced in command script
 function __show_command_explanation() {
@@ -38,13 +37,18 @@ function __show_command_explanation() {
 # command local options
 ALF_CONTENT_PROP=cm:content
 
-__process_global_options $@
+__process_options $@
 
 # shift away parsed args
 shift $((OPTIND-1))
 
-# command arguments
+# command arguments, read first line from stdin if argument is -
 ALF_URL=$1
+if [[ "$ALF_URL" == "-" ]]
+then
+  read line
+  ALF_URL=$line
+fi
 
 if $ALF_VERBOSE
 then
