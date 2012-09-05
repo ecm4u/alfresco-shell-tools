@@ -152,6 +152,7 @@ function __process_options() {
 # global options
 ALF_GLOBAL_OPTIONS=":vhE:U:P:C:"
 ALF_CMD_OPTIONS=$ALF_GLOBAL_OPTIONS
+ALF_JSHON="./jshon"
 
 # read environment vars
 ALF_UID=$ALFTOOLS_USER
