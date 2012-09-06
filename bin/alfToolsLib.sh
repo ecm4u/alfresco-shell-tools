@@ -21,7 +21,7 @@ function __show_global_options() {
 function __show_command_options() {
   echo "  command options:"
   echo "    no command specific options"
-
+  echo 
 }
 
 # intended to be replaced in command script
