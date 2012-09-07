@@ -141,7 +141,7 @@ function __process_options() {
     v)
       ALF_VERBOSE=true;;
     ?)
-      __process_cmd_option $OPTNAME $OPTARG
+      __process_cmd_option "$OPTNAME" "$OPTARG"
   esac
   done
 
