@@ -105,7 +105,7 @@ ENC_ROOT_NODE=$ENCODED_PARAM
 
 if [[ "$ALF_OUTPUT_MODE" == "property" ]]
 then
-  curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW "$ALF_EP/service/slingshot/search?site=&term=$ENC_TERM&repo=true&rootNode=$ENC_ROOT_NODE" | $ALF_JSHON -e items -a -e $ALF_PROPERTY -u
+  curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW "$ALF_EP/service/slingshot/search?site=&term=$ENC_TERM&repo=true&rootNode=$ENC_ROOT_NODE" | $ALF_JSHON -Q -e items -a -e $ALF_PROPERTY -u
 elif [[ "$ALF_OUTPUT_MODE" == "json" ]]
 then
   curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW "$ALF_EP/service/slingshot/search?site=&term=$ENC_TERM&repo=true&rootNode=$ENC_ROOT_NODE"
