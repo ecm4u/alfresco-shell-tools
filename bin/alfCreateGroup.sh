@@ -99,15 +99,25 @@ ENC_GROUP=$ENCODED_PARAM
 JSON=`echo '{}' | $ALF_JSHON -s "$ALF_DISPLAY_NAME" -i 'displayName'`
 echo $JSON | curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW -H 'Content-Type:application/json' -d@- -X POST "$ALF_EP/service/api/rootgroups/$ENC_GROUP"
 
+if [[ "$?" != "0" ]]
+then
+  exit $?
+fi
+
 # add as member if needed
 if [[ "$ALF_PARENT_GROUP" != "" ]]
 then
-  $ALFTOOLS_BIN/alfAddAuthorityToGroup.sh $ALF_PARENT_GROUP "GROUP_$ALF_GROUP"
+  RET=`$ALFTOOLS_BIN/alfAddAuthorityToGroup.sh $ALF_PARENT_GROUP "GROUP_$ALF_GROUP" 2>&1`
+  if [[ "$?" != "0" ]]
+  then
+    echo $RET
+    exit $?
+  fi
 fi
 
 
 
-  #curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW -H 'Content-Type:application/json' -X POST "$ALF_EP/service/api/groups/$ENC_PARENT_GROUP/children/$ENC_GROUP"
+#curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW -H 'Content-Type:application/json' -X POST "$ALF_EP/service/api/groups/$ENC_PARENT_GROUP/children/$ENC_GROUP"
 #{"userName":"lodda","password":"test","firstName":"Lothar","lastName":"MÃ¤rkle","email":"lothar.maerkle@ecm4u.de","disableAccount":false,"quota":-1,"groups":[]}
 #
 #
