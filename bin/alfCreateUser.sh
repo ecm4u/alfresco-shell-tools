@@ -124,10 +124,9 @@ done
 
 echo $ALF_JSON | curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW -H 'Content-Type:application/json' -d@- -X POST $ALF_EP/service/api/people
 
-exit
 
-{"userName":"lodda","password":"test","firstName":"Lothar","lastName":"MÃ¤rkle","email":"lothar.maerkle@ecm4u.de","disableAccount":false,"quota":-1,"groups":[]}
-
-
-http://localhost:8080/share/proxy/alfresco/api/people
+#{"userName":"lodda","password":"test","firstName":"Lothar","lastName":"MÃ¤rkle","email":"lothar.maerkle@ecm4u.de","disableAccount":false,"quota":-1,"groups":[]}
+#
+#
+#http://localhost:8080/share/proxy/alfresco/api/people
 
