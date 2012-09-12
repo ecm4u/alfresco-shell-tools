@@ -55,6 +55,8 @@ shift $((OPTIND-1))
 
 ALF_GROUP=$1
 
+# remove optional GROUP_ prefix
+ALF_GROUP=${ALF_GROUP#GROUP_}
 
 if $ALF_VERBOSE
 then

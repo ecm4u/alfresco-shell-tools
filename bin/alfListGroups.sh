@@ -32,4 +32,4 @@ then
   echo "  curl opts: $ALF_CURL_OPTS"
 fi
 
-curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW "$ALF_EP/service/api/groups"
+curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW "$ALF_EP/service/api/groups" | $ALF_JSHON -Q -e data -a -e fullName -u
