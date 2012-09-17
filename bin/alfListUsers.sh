@@ -18,7 +18,7 @@ function __show_command_options() {
 # intended to be replaced in command script
 function __show_command_explanation() {
   echo "  command explanation:"
-  echo "    the alfListPersons.sh command lists all user names of alfresco"
+  echo "    the alfListUsers.sh command lists all user names of alfresco one in a row"
   echo
 }
 
