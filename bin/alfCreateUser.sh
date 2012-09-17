@@ -111,13 +111,13 @@ then
   exit 1
 fi
 
-ALF_JSON=`echo '{"groups":[]}' | ./jshon -s "$ALF_LAST_NAME" -i lastName -s "$ALF_FIRST_NAME" -i firstName -s "$ALF_USER_NAME" -i userName -s "$ALF_EMAIL" -i email -s "$ALF_PASSWD" -i password -n 'false' -i disableAccount`
+ALF_JSON=`echo '{"groups":[]}' | $ALF_JSHON -s "$ALF_LAST_NAME" -i lastName -s "$ALF_FIRST_NAME" -i firstName -s "$ALF_USER_NAME" -i userName -s "$ALF_EMAIL" -i email -s "$ALF_PASSWD" -i password -n 'false' -i disableAccount`
 
 # set groups if any
 for GRP in ${ALF_GROUPS[*]}
 do
   ALF_AUTHORITY="GROUP_${GRP}"
-  ALF_JSON=`echo $ALF_JSON | ./jshon -e groups -s "$ALF_AUTHORITY" -i append -p`  	
+  ALF_JSON=`echo $ALF_JSON | $ALF_JSHON -e groups -s "$ALF_AUTHORITY" -i append -p`  	
 done
 
 #echo $ALF_JSON
