@@ -55,8 +55,16 @@ shift $((OPTIND-1))
 
 ALF_GROUP=$1
 
+if [[ "$ALF_GROUP" == "" ]]
+then
+  echo "a group name is required"
+  exit 1
+fi
+
 # remove optional GROUP_ prefix
 ALF_GROUP=${ALF_GROUP#GROUP_}
+
+
 
 if $ALF_VERBOSE
 then
