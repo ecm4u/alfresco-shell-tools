@@ -45,9 +45,9 @@ ALF_LOCAL_FILE=$1
 ALF_USER_NAME=$2
 
 # parameter check
-if [[ "$ALF_FILENAME" == "" ]]
+if [[ "$ALF_LOCAL_FILE" == "" ]]
 then
-  echo "filename is required"
+  echo " a local file is required or use - to read from stdin"
   exit 1
 fi
 
@@ -90,7 +90,7 @@ curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW --form "contentType=cm:content" --form "
 
 
 
-
+L
 
 
 
