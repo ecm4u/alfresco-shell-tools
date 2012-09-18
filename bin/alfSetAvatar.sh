@@ -85,12 +85,3 @@ fi
 curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW --form "contentType=cm:content" --form "filedata=@$ALF_LOCAL_FILE;filename=${ALF_FILENAME}${ALF_MT_ARG}" --form "username=$ALF_USER_NAME" --form "overwrite=false" $ALF_EP/service/slingshot/profile/uploadavatar | $ALF_JSHON -Q -e nodeRef -u
 
 
-
-
-
-
-
-L
-
-
-
