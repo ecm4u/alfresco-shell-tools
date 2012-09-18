@@ -74,13 +74,14 @@ __encode_url_param $ALF_GROUP
 ENC_GROUP=$ENCODED_PARAM
 
 ALF_API_URI="/service/api/groups/$ENC_GROUP/children"
-
-if [[ !$ALF_SHOW_USERS && $ALF_SHOW_GROUPS ]]
+echo $ALF_SHOW_USERS
+echo $ALF_SHOW_GROUPS
+if [[ $ALF_SHOW_GROUPS == true]]
 then
   ALF_API_URI="/service/api/groups/$ENC_GROUP/children?authorityType=GROUP"
 fi
 
-if [[ $ALF_SHOW_USERS && !$ALF_SHOW_GROUPS ]]
+if [[ $ALF_SHOW_USERS == true ]]
 then
   ALF_API_URI="/service/api/groups/$ENC_GROUP/children?authorityType=USER"
 fi
