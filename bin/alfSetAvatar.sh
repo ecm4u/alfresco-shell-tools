@@ -45,9 +45,9 @@ ALF_LOCAL_FILE=$1
 ALF_USER_NAME=$2
 
 # parameter check
-if [[ "$ALF_FILENAME" == "" && "$ALF_LOCAL_FILE" == "-" ]]
+if [[ "$ALF_FILENAME" == "" ]]
 then
-  echo "option -n is required if contents are read from stdin"
+  echo "filename is required"
   exit 1
 fi
 
