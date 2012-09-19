@@ -11,6 +11,7 @@ function __show_global_options() {
   echo "    -v   verbose    displays information while executing"
   echo 
   echo "    -E   endpoint   Alfresco endpoint"
+  echo "    -S   share endpoint Alfresco share endpoint"
   echo "    -U   user       Alfresco user id used in authentication"
   echo "    -P   password   password used for authenticaiton"
   echo
@@ -136,6 +137,8 @@ function __process_options() {
       ALF_PW=$OPTARG;;
     E)
       ALF_EP=$OPTARG;;
+    S)
+      ALF_SHARE_EP=$OPTARG;;
     C)
       ALF_CURL_OPTS=$OPTARG;;
     v)
@@ -150,19 +153,21 @@ function __process_options() {
 
 
 # global options
-ALF_GLOBAL_OPTIONS=":vhE:U:P:C:"
+ALF_GLOBAL_OPTIONS=":vhE:U:P:C:S:"
 ALF_CMD_OPTIONS=$ALF_GLOBAL_OPTIONS
-ALF_JSHON="./jshon"
+
+# jshon tool location, defaults to jshon
+ALF_JSHON=${ALFTOOLS_JSHON:-jshon}
 
 # read environment vars
 ALF_UID=$ALFTOOLS_USER
 ALF_PW=$ALFTOOLS_PASSWORD
 ALF_EP=$ALFTOOLS_ENDPOINT
+ALF_SHARE_EP=$ALFTOOLS_SHARE_ENDPOINT
 ALF_VERBOSE=false
 ALF_CURL_OPTS=$ALFTOOLS_CURL_OPTS
 
 
-ALF_JSHON=./jshon
 
 
 # init curl options. Note: -f is important to signal communication errors
