@@ -104,8 +104,8 @@ fi
 ALF_JSON=`echo '{}' | $ALF_JSHON -s "$ALF_SITE_TITLE" -i title -s "$ALF_SITE_SHORT_NAME" -i shortName -s "$ALF_SITE_VISIBILITY" -i visibility -s "$ALF_SITE_DESCRIPTION" -i description -s "$ALF_SITE_PRESET" -i sitePreset`
 
 # get a valid share session id
-ALF_SESSIONID=`curl -f -sS -q -i --data "username=$ALF_UID"  --data "password=$ALF_PW" -X POST $ALF_SHARE_EP/page/dologin|grep JSESSIONID | perl -pe 's/.*JSESSIONID=(.*);.*/$1/'`
-
+__get_share_session_id
+ALF_SESSIONID=$ALF_SHARE_SESSIONID
 
 echo "$ALF_JSON" | curl $ALF_CURL_OPTS -H "Content-Type: application/json" --cookie JSESSIONID=$ALF_SESSIONID -d@- -X POST $ALF_SHARE_EP/service/modules/create-site 
 

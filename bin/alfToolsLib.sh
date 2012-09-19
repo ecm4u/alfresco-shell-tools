@@ -117,9 +117,13 @@ function __process_cmd_option() {
   local OPTARG=$2
 
   echo "cmd opts: $OPTNAME=$OPTARG"
-
-
 }
+
+function __get_share_session_id() {
+  # get a valid share session id
+  ALF_SHARE_SESSIONID=`curl -f -sS -q -i --data "username=$ALF_UID"  --data "password=$ALF_PW" -X POST $ALF_SHARE_EP/page/dologin|grep JSESSIONID | perl -pe 's/.*JSESSIONID=(.*);.*/$1/'`
+}
+
 
 function __process_options() {
   while getopts $ALF_CMD_OPTIONS OPTNAME
