@@ -84,7 +84,7 @@ ENC_GROUP=$ENCODED_PARAM
 ALF_API_URI="/service/api/groups/$ENC_GROUP/children"
 echo $ALF_SHOW_USERS
 echo $ALF_SHOW_GROUPS
-if [[ $ALF_SHOW_GROUPS == true]]
+if [[ $ALF_SHOW_GROUPS == true ]]
 then
   ALF_API_URI="/service/api/groups/$ENC_GROUP/children?authorityType=GROUP"
 fi
