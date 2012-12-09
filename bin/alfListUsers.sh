@@ -23,7 +23,7 @@ function __show_command_explanation() {
 }
 
 # command local options
-ALF_CMD_OPTIONS="${ALF_GLOBAL_OPTIONS}jg"
+ALF_CMD_OPTIONS="${ALF_GLOBAL_OPTIONS}"
 ALF_JSON_OUTPUT=false
 
 function __process_cmd_option() {
