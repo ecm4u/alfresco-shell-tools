@@ -10,17 +10,14 @@ ALFTOOLS_BIN=`dirname "$0"`
 # intended to be replaced in command script by a command specific output
 function __show_command_options() {
   echo "  command options:"
-  echo "    -s SHORT_NAME  optional, the sites short name"
-  echo "    -d DESCRIPTION optional, the site description"
-  echo "    -a ACCESS  optional, either 'public' or 'private'"
-  echo "    -p SITE_PRESET optional, standard preset is 'site-dashboard'"
   echo
 }
 
 # intended to be replaced in command script
 function __show_command_arguments() {
   echo "  command arguments:"
-  echo "    SITE_TITLE     the main title of the site"
+  echo "    NODEREF     the noderef of the item to rename"
+  echo "    NEWNAME     the new name of the item"
   echo
 }
 
@@ -37,31 +34,6 @@ function __show_command_explanation() {
   
 }
 
-
-# command local options
-ALF_CMD_OPTIONS="${ALF_GLOBAL_OPTIONS}s:d:a:p:"
-ALF_SITE_SHORT_NAME=""
-ALF_SITE_DESCRIPTION=""
-ALF_SITE_VISIBILITY="PUBLIC"
-ALF_SITE_PRESET="site-dashboard"
-ALF_SITE_TITLE=""
-
-function __process_cmd_option() {
-  local OPTNAME=$1
-  local OPTARG=$2
-
-  case $OPTNAME
-  in
-    s)
-      ALF_SITE_SHORT_NAME=$OPTARG;;
-    d)
-      ALF_SITE_DESCRIPTION="$OPTARG";;
-    a)
-      ALF_SITE_VISIBILITY=$OPTARG;;
-    p)
-      ALF_SITE_PRESET=$OPTARG;;
-  esac
-}
 
 __process_options "$@"
 
