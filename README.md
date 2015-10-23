@@ -13,32 +13,32 @@ Alfresco shell tools.
 
 Reported use cases have been:
 
-    * Backup User-Group relationships
-    * Provision demo systems
-    * Keep avatar pictures in sync with a 3rth party source
-    * pregenerate >100k thumbnail images
-    * Initial import of users and groups, along with user-group and group-subgroup assignements
-    * Create a bunch of tenants for a multi-tenancy enabled Alfresco
-    * Do repetitive maintenance tasks for multiple tenants in one go 
+* Backup User-Group relationships
+* Provision demo systems
+* Keep avatar pictures in sync with a 3rth party source
+* pregenerate >100k thumbnail images
+* Initial import of users and groups, along with user-group and group-subgroup assignements
+* Create a bunch of tenants for a multi-tenancy enabled Alfresco
+* Do repetitive maintenance tasks for multiple tenants in one go 
 
 # How to start?
 
-    1. check out the scripts or download a release tarball
-    2. install required 3-rd party tools for json handling
-    3. set environment variables
-    4. have fun
+1. check out the scripts or download a release tarball
+2. install required 3-rd party tools for json handling
+3. set environment variables
+4. have fun
 
 # Environment Variables
 
 Required environment variables:
 
-    * `ALFTOOLS_USER=<username>`
-    * `ALFTOOLS_PASSWORD=<password>`
-    * `ALFTOOLS_ENDPOINT='http://<host>.<domain>:<port>/alfresco'`
+* `ALFTOOLS_USER=<username>`
+* `ALFTOOLS_PASSWORD=<password>`
+* `ALFTOOLS_ENDPOINT='http://<host>.<domain>:<port>/alfresco'`
 
 Optional environment variables:
 
-    * `ALF_VERVBOSE=<true|false>`
+* `ALF_VERVBOSE=<true|false>`
 
 # Commands
 
