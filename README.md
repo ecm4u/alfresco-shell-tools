@@ -42,85 +42,95 @@ Optional environment variables:
 
 # Commands
 
-## `alfAddAspect.sh`
+The available commands are:
 
-## `alfAddAuthorityToGroup.sh`
-
-## `alfCreateGroup.sh`
-
-## `alfCreateSite.sh`
-
-## `alfCreateSpace.sh`
-
-## `alfCreateTenant.sh`
-
-## `alfCreateUser.sh`
-
-## `alfDeleteAspect.sh`
-
-## `alfDeleteAuthorityFromGroup.sh`
-
-## `alfDeleteGroup.sh`
-
-## `alfDelete.sh`
-
-## `alfDeleteSite.sh`
-
-## `alfDeleteUser.sh`
-
-## `alfGetCompanyHomeNodeRef.sh`
-
-## `alfGet.sh`
-
-## `alfGetThumbnail.sh`
-
-## `alfGetUserHomeFolder.sh`
-
-## `alfGetUser.sh`
-
-## `alfListGroupMembers.sh`
-
-## `alfListGroups.sh`
-
-## `alfList.sh`
-
-## `alfListTenants.sh`
-
-## `alfListUsers.sh`
-
-## `alfMetadata.sh`
-
-## `alfMkdir.sh`
-
-## `alfNodeRef2Path.sh`
-
-## `alfPath2NodeRef.sh`
-
-## `alfRename.sh`
-
-## `alfResetAvatar.sh`
-
-## `alfSearch.sh`
-
-Pass a Lucene search query and get a list of NodeRefs that match the query.
-
-```shell
-$ alfSearch.sh '@acme\:propertyName:"propertyValue"'
-workspace://SpacesStore/ee5e0d80-dce8-438d-827e-f87ac1d9d0ec
+```
+alfAddAspect.sh
+alfAddAuthorityToGroup.sh
+alfCreateGroup.sh
+alfCreateSite.sh
+alfCreateSpace.sh
+alfCreateTenant.sh
+alfCreateUser.sh
+alfDeleteAspect.sh
+alfDeleteAuthorityFromGroup.sh
+alfDeleteGroup.sh
+alfDelete.sh
+alfDeleteSite.sh
+alfDeleteUser.sh
+alfGetCompanyHomeNodeRef.sh
+alfGet.sh
+alfGetThumbnail.sh
+alfGetUserHomeFolder.sh
+alfGetUser.sh
+alfListGroupMembers.sh
+alfListGroups.sh
+alfList.sh
+alfListTenants.sh
+alfListUsers.sh
+alfMetadata.sh
+alfMkdir.sh
+alfNodeRef2Path.sh
+alfPath2NodeRef.sh
+alfRename.sh
+alfResetAvatar.sh
+alfSearch.sh
+alfSetAvatar.sh
+alfUpdateUser.sh
+alfUpload.sh
 ```
 
-## `alfSetAvatar.sh`
+Use `-h` to get a detailed description of each command.
 
-## `alfToolsLib.sh`
+Example:
 
-## `alfUpdateUser.sh`
+```shell
+$ alfSearch.sh -h
+usage: ./bin/alfSearch.sh [global options] [command specific options] arguments
+  global options:
+    -h   help       shows this help screen
+    -v   verbose    displays information while executing
 
-## `alfUpload.sh`
+    -E   endpoint   Alfresco endpoint
+    -S   share endpoint Alfresco share endpoint
+    -U   user       Alfresco user id used in authentication
+    -P   password   password used for authenticaiton
 
+    -C   curl opts  any additional options pass to curl
 
+  command options:
+    -p property name    which property of each search result node should be printed to stdout.
+                        Possible values are nodeRef(default), name, path, type, displayName, title,
+                        description, modifiedOn, modifiedBy, modifiedByUser, size, mimetype, path
+    -m [property|json]  output mode: 'property' (default) prints the value of the property given by -p.
+                        Mode 'json' prints the whole result set as a json object.
 
+  command arguments:
+    SEARCHTERM       an Alfresco search term
 
+  command explanation:
+    the alfSearch.sh command issues a search against the Alfresco repository and prints
+    each the nodeRef of each hit.
 
+  usage examples:
 
+    ./alfSearch.sh 'this is fun'
+       --> executes a full text search for 'this is fun'
+    ./alfSearch.sh 'TYPE:myns:mydoctype' | wc -l
+       --> prints the number of documents of type myns:mydoctype
 
-*The rest of the documentation still needs to be added. Coming up soon*
+  side note about the Alfresco search and the implications of the various implementations
+
+    If Alfresco uses the LUCENE search backend, the result list will not be stable. This is due
+    to internal performance optimizations done by Alfresco and depends on cache filling levels and
+    system load. As a result the search will return more results on subsequence executions.
+
+    If Alfresco is configured to use the SOLR search backend, the result list will be 'eventual consistent'
+    This simple means, the Alfresco content is indexed by a background job in an asynchronous manner and
+    and therefore will not contain all content at any point in time.
+    However, the result list is stable, taking into account what is indexed so far.
+
+  the alfresco shell tools are created by
+    lothar.maerkle@ecm4u.de - http://www.ecm4u.de - http://www.ecm-market.de
+    anybody jumps in?
+```
