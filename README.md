@@ -48,7 +48,7 @@ The available commands are:
 ```
 [x]alfAddAuthorityToGroup.sh
 [x]alfCreateGroup.sh
-[x]alfCreateSite.sh
+[ ]alfCreateSite.sh
 [x]alfCreateTenant.sh
 [x]alfCreateUser.sh
 [x]alfDeleteAuthorityFromGroup.sh
