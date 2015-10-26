@@ -1,0 +1,9 @@
+<webscript>
+   <shortname>Get Company Home</shortname>
+   <description>Get the NodeRef of Company Home</description>
+   <url>/ecm4u/search/company-home</url>
+   <format default="text">argument</format>
+   <authentication>user</authentication>
+   <lifecycle>internal</lifecycle>
+</webscript>
+

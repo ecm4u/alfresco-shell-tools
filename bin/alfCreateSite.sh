@@ -12,7 +12,7 @@ function __show_command_options() {
   echo "  command options:"
   echo "    -s SHORT_NAME  optional, the sites short name"
   echo "    -d DESCRIPTION optional, the site description"
-  echo "    -a ACCESS  optional, either 'public' or 'private'"
+  echo "    -a ACCESS  optional, either 'PUBLIC' or 'PRIVATE'"
   echo "    -p SITE_PRESET optional, standard preset is 'site-dashboard'"
   echo
 }
@@ -33,6 +33,9 @@ function __show_command_explanation() {
   echo
   echo "  ./alfCreateSite.sh NewSite"
   echo "     --> creates a new site named 'NewSite' with public visibility"
+  echo
+  echo "  ./alfCreateSite.sh -s private-site -d 'Site Description' -a PRIVATE 'Site Title'"
+  echo "     --> creates a new site named 'private-site' with private visibility"
   echo
   
 }
@@ -103,19 +106,4 @@ fi
 # craft json body
 ALF_JSON=`echo '{}' | $ALF_JSHON -s "$ALF_SITE_TITLE" -i title -s "$ALF_SITE_SHORT_NAME" -i shortName -s "$ALF_SITE_VISIBILITY" -i visibility -s "$ALF_SITE_DESCRIPTION" -i description -s "$ALF_SITE_PRESET" -i sitePreset`
 
-# get a valid share session id
-__get_share_session_id
-ALF_SESSIONID=$ALF_SHARE_SESSIONID
-
-echo "$ALF_JSON" | curl $ALF_CURL_OPTS -H "Content-Type: application/json" --cookie JSESSIONID=$ALF_SESSIONID -d@- -X POST $ALF_SHARE_EP/service/modules/create-site 
-
-
-#
-#{"visibility":"PUBLIC","title":"OtherSite","shortName":"othersite","description":"other site descrpiption","sitePreset":"site-dashboard"}#upload webscript parameter description:
-
-
-
-
-
-
-
+echo "$ALF_JSON" | curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW -H "Content-Type: application/json" -d@- -X POST $ALF_EP/service/api/sites

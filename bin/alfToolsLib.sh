@@ -83,7 +83,7 @@ function __encode_url_path() {
   for (( pos=0 ; pos<strlen ; pos++ )); do
      c=${string:$pos:1}
      case "$c" in
-        [/-_.~a-zA-Z0-9] ) o="${c}" ;;
+        [-_.~a-zA-Z0-9/] ) o="${c}" ;;
         * )               printf -v o '%%%02x' "'$c"
      esac
      encoded+="${o}"
@@ -121,7 +121,7 @@ function __process_cmd_option() {
 
 function __get_share_session_id() {
   # get a valid share session id
-  ALF_SHARE_SESSIONID=`curl -f -sS -q -i --data "username=$ALF_UID"  --data "password=$ALF_PW" -X POST $ALF_SHARE_EP/page/dologin|grep JSESSIONID | perl -pe 's/.*JSESSIONID=(.*);.*/$1/'`
+  ALF_SHARE_SESSIONID=`curl -f -sS -q -i --data "username=$ALF_UID"  --data "password=$ALF_PW" -X POST $ALF_SHARE_EP/page/dologin|grep JSESSIONID | perl -pe 's/.*JSESSIONID=([^;]*);.*/$1/'`
 }
 
 

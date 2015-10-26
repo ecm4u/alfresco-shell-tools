@@ -26,7 +26,8 @@ Reported use cases have been:
 1. check out the scripts or download a release tarball
 2. install required 3-rd party tools for json handling
 3. set environment variables
-4. have fun
+4. install web-scripts from `alfresco`
+5. have fun
 
 # Environment Variables
 
@@ -45,39 +46,34 @@ Optional environment variables:
 The available commands are:
 
 ```
-alfAddAspect.sh
-alfAddAuthorityToGroup.sh
-alfCreateGroup.sh
-alfCreateSite.sh
-alfCreateSpace.sh
-alfCreateTenant.sh
-alfCreateUser.sh
-alfDeleteAspect.sh
-alfDeleteAuthorityFromGroup.sh
-alfDeleteGroup.sh
-alfDelete.sh
-alfDeleteSite.sh
-alfDeleteUser.sh
-alfGetCompanyHomeNodeRef.sh
-alfGet.sh
-alfGetThumbnail.sh
-alfGetUserHomeFolder.sh
-alfGetUser.sh
-alfListGroupMembers.sh
-alfListGroups.sh
-alfList.sh
-alfListTenants.sh
-alfListUsers.sh
-alfMetadata.sh
-alfMkdir.sh
-alfNodeRef2Path.sh
-alfPath2NodeRef.sh
-alfRename.sh
-alfResetAvatar.sh
-alfSearch.sh
-alfSetAvatar.sh
-alfUpdateUser.sh
-alfUpload.sh
+[x]alfAddAuthorityToGroup.sh
+[x]alfCreateGroup.sh
+[x]alfCreateSite.sh
+[x]alfCreateTenant.sh
+[x]alfCreateUser.sh
+[x]alfDeleteAuthorityFromGroup.sh
+[x]alfDeleteGroup.sh
+[x]alfDelete.sh
+[ ]alfDeleteSite.sh
+[x]alfDeleteUser.sh
+[x]alfGetCompanyHomeNodeRef.sh
+[x]alfGet.sh
+[x]alfGetThumbnail.sh
+[x]alfGetUserHomeFolder.sh
+[x]alfGetUser.sh
+[x]alfListGroupMembers.sh
+[x]alfListGroups.sh
+[x]alfListTenants.sh
+[x]alfListUsers.sh
+[x]alfMetadata.sh
+[x]alfNodeRef2Path.sh
+[x]alfPath2NodeRef.sh
+[x]alfRename.sh
+[x]alfResetAvatar.sh
+[x]alfSearch.sh
+[x]alfSetAvatar.sh
+[x]alfUpdateUser.sh
+[x]alfUpload.sh
 ```
 
 Use `-h` to get a detailed description of each command.

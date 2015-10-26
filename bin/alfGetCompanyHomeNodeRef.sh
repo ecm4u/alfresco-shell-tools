@@ -31,8 +31,7 @@ then
   echo "  curl opts: $ALF_CURL_OPTS"
 fi
 
-# use a search to retrieve the company home noderef
-$ALFTOOLS_BIN/alfSearch.sh -p nodeRef 'PATH:"/app:company_home"'
+curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW "$ALF_EP/service/ecm4u/search/company-home"
 
 
 
