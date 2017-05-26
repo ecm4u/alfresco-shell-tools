@@ -85,6 +85,9 @@ The available commands are:
 [x]alfUpload.sh
 ```
 
+Note: alfCreateSite.sh alfDeleteSite.sh alfInviteUser.sh are not
+tested with Alfresco 4.x (pre-CSRF protection)
+
 Use `-h` to get a detailed description of each command.
 
 Example:
