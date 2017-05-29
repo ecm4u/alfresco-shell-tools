@@ -5,6 +5,12 @@
 #
 #
 
+# Fri Oct  2 11:46:27 CEST 2015
+# spd@daphne.cps.unizar.es
+#
+# fixes in __get_share_session_id
+#
+
 function __show_global_options() {
   echo "  global options:"
   echo "    -h   help       shows this help screen"
@@ -74,6 +80,11 @@ function __encode_url_param() {
   ENCODED_PARAM="${encoded}"   #+or echo the result (EASIER)... or both... :p
 }
 
+function __htd()
+{
+	perl -pe 's/\%([A-Fa-f0-9]{2})/pack("C", hex($1))/seg;'
+}
+
 function __encode_url_path() {
 # see here for credits http://stackoverflow.com/questions/296536/urlencode-from-a-bash-script
   local string=$@
@@ -83,7 +94,7 @@ function __encode_url_path() {
   for (( pos=0 ; pos<strlen ; pos++ )); do
      c=${string:$pos:1}
      case "$c" in
-        [-_.~a-zA-Z0-9/] ) o="${c}" ;;
+        [/-_.~a-zA-Z0-9] ) o="${c}" ;;
         * )               printf -v o '%%%02x' "'$c"
      esac
      encoded+="${o}"
@@ -121,7 +132,12 @@ function __process_cmd_option() {
 
 function __get_share_session_id() {
   # get a valid share session id
-  ALF_SHARE_SESSIONID=`curl -f -sS -q -i --data "username=$ALF_UID"  --data "password=$ALF_PW" -X POST $ALF_SHARE_EP/page/dologin|grep JSESSIONID | perl -pe 's/.*JSESSIONID=([^;]*);.*/$1/'`
+  ALF_SHARE_SESSIONID=`curl -f -sS -q -i \
+  	--data "username=$ALF_UID" \
+	--data "password=$ALF_PW" \
+	-X POST $ALF_SHARE_EP/page/dologin |\
+	grep Set-Cookie | sed -e 's/.*Cookie: //' -e 's/; .*//' | tr \\\\012 \; |\
+	sed -e 's/JSESSIONID=//' -e 's/[;]*$//' -e 's/;/; /g'`
 }
 
 

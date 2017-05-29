@@ -25,6 +25,7 @@ Reported use cases have been:
 
 1. check out the scripts or download a release tarball
 2. install required 3-rd party tools for json handling
+   http://kmkeen.com/jshon/
 3. set environment variables
 4. install web-scripts from `alfresco`
 5. have fun
@@ -43,21 +44,27 @@ Optional environment variables:
 
 # Commands
 
+Note: 'x' means working, ' ' untested with 5.1, 'X' requires
+alfresco administrator privileges, '-' not working.
+
+
 The available commands are:
 
 ```
-[x]alfAddAuthorityToGroup.sh
-[x]alfCreateGroup.sh
-[ ]alfCreateSite.sh
+[X]alfAddAuthorityToGroup.sh
+[x]alfCreateCalendarEntry.sh
+[X]alfCreateGroup.sh
+[X]alfCreateSite.sh
 [x]alfCreateTenant.sh
 [x]alfCreateUser.sh
 [x]alfDeleteAuthorityFromGroup.sh
 [x]alfDeleteGroup.sh
 [x]alfDelete.sh
-[ ]alfDeleteSite.sh
+[X]alfDeleteSite.sh
 [x]alfDeleteUser.sh
 [x]alfGetCompanyHomeNodeRef.sh
 [x]alfGet.sh
+[x]alfGetPermissions.sh
 [x]alfGetThumbnail.sh
 [x]alfGetUserHomeFolder.sh
 [x]alfGetUser.sh
@@ -66,15 +73,20 @@ The available commands are:
 [x]alfListTenants.sh
 [x]alfListUsers.sh
 [x]alfMetadata.sh
+[x]alfMkdir.sh
 [x]alfNodeRef2Path.sh
 [x]alfPath2NodeRef.sh
 [x]alfRename.sh
 [x]alfResetAvatar.sh
 [x]alfSearch.sh
 [x]alfSetAvatar.sh
+[x]alfSetPermissions.sh
 [x]alfUpdateUser.sh
 [x]alfUpload.sh
 ```
+
+Note: alfCreateSite.sh alfDeleteSite.sh alfInviteUser.sh are not
+tested with Alfresco 4.x (pre-CSRF protection)
 
 Use `-h` to get a detailed description of each command.
 

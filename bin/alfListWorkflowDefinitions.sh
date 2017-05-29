@@ -7,10 +7,11 @@
 ALFTOOLS_BIN=`dirname "$0"`
 . $ALFTOOLS_BIN/alfToolsLib.sh
 
+
 # intended to be replaced in command script
 function __show_command_explanation() {
   echo "  command explanation:"
-  echo "    the alfGetCompanyHomeNodeRef.sh retrieves the nodeRef of the Company Home node"
+  echo "    the alfListWorkflowDefinitions.sh command lists all workflow definnitions in Alfresco"
   echo
 }
 
@@ -30,10 +31,8 @@ then
   echo "  endpoint: $ALF_EP"
   echo "  curl opts: $ALF_CURL_OPTS"
 fi
-
-# use a search to retrieve the company home noderef
-$ALFTOOLS_BIN/alfSearch.sh -p nodeRef 'PATH:"/app:company_home"'
-
-
-
-
+echo " "
+echo "Returned info: id, name, title, description"
+echo " "
+curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW "$ALF_EP/service/api/workflow-definitions" | $ALF_JSHON -Q -e data -a -e id -u -p -e name -u -p -e title -u -p -e description -u | sed 's/^$/-/' | paste -s -d '\t\t\t\n'
+echo " "

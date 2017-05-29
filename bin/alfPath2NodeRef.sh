@@ -2,7 +2,10 @@
 # set -x
 # param section
 
+# Tested - Workgin with Alfresco 5.1
+
 # source function library
+
 
 ALFTOOLS_BIN=`dirname "$0"`
 . $ALFTOOLS_BIN/alfToolsLib.sh
@@ -12,6 +15,7 @@ function __show_command_explanation() {
   echo "  command explanation:"
   echo "    the alfPath2NodeRef.sh maps an Alfresco QName-path to a nodeRef"
   echo "    A QName path is prefixed with a namespace: /app:company_home/cm:testfolder/cm:testfile.pdf"
+  echo "    Example: alfPath2NodeRef.sh /app:company_home/st:sites/cm:My_Site/cm:documentLibrary/cm:My_Folder/Subfolder"
 }
 
 function __show_command_arguments() {
