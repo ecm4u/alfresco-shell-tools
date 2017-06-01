@@ -157,7 +157,7 @@ $ALF_JSHON \
 -s "page/reject-invite" -i rejectURL`
 
 
-ALF_CSRF=`curl $ALF_CURL_OPTS \
+ALF_CSRF=`curl $ALF_CURL_OPTS -v \
 -H "Content-Type: application/json; charset=UTF-8" \
 -e $ALF_SHARE_EP/page/site/${ALF_SITE_SHORT_NAME}/add-users \
 --cookie JSESSIONID="$ALF_SESSIONID" \
