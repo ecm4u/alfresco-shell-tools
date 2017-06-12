@@ -80,8 +80,7 @@ function __encode_url_param() {
   ENCODED_PARAM="${encoded}"   #+or echo the result (EASIER)... or both... :p
 }
 
-function __htd()
-{
+function __htd() {
 	perl -pe 's/\%([A-Fa-f0-9]{2})/pack("C", hex($1))/seg;'
 }
 
