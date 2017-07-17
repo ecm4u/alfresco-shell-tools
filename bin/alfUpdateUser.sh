@@ -2,6 +2,16 @@
 # set -x
 # param section
 
+# This version: Mon Jul 17 14:13:00 CEST 2017
+# spd@daphne.cps.unizar.es
+# Add -o -a options
+
+# Script to get users for a site
+# Status: working against alfresco-5.1.e with CSRF protection enabled (default)
+
+# Requires alfToolsLib.sh
+# Requires jshon
+
 # source function library
 
 ALFTOOLS_BIN=`dirname "$0"`
@@ -15,6 +25,8 @@ function __show_command_options() {
   echo "    -f    Users first name"
   echo "    -l    Users last name"
   echo "    -e    Users email"
+  echo "    -o    Users organization"
+  echo "    -a    Disable Account true|false"
   echo 
 }
 
@@ -30,12 +42,14 @@ function __show_command_explanation() {
   echo 
 }
 
-ALF_CMD_OPTIONS="${ALF_GLOBAL_OPTIONS}n:p:f:l:e:g:"
+ALF_CMD_OPTIONS="${ALF_GLOBAL_OPTIONS}n:p:f:l:e:g:a:o:"
 ALF_USER_NAME=""
 ALF_FIRST_NAME=""
 ALF_LAST_NAME=""
 ALF_EMAIL=""
+ALF_ORG=""
 ALF_PASSWD=""
+ALF_ENABLE=""
 ALF_GROUPS=()
 
 function __process_cmd_option() {
@@ -54,6 +68,10 @@ function __process_cmd_option() {
       ALF_EMAIL=$OPTARG;;
     p)
       ALF_PASSWD=$OPTARG;;
+    o)
+      ALF_ORG=$OPTARG;;
+    a)
+      ALF_ENABLE=$OPTARG;;
     g)
       ALF_GROUPS=("${ALF_GROUPS[@]}" $OPTARG);;
   esac
@@ -74,6 +92,7 @@ then
   echo "  user name: $ALF_USER_NAME"
   echo "  first name: $ALF_FIRST_NAME"
   echo "  last name: $ALF_LAST_NAME"
+  echo "  enable: $ALF_ENABLE"
   echo "  email: $ALF_EMAIL"
 fi
 
@@ -100,6 +119,17 @@ then
   ALF_JSON=`echo "$ALF_JSON"| $ALF_JSHON -s "$ALF_EMAIL" -i email`
 fi
 
+if [[ "$ALF_ENABLE" != "" ]]
+then
+  ALF_JSON=`echo "$ALF_JSON"| $ALF_JSHON -n "$ALF_ENABLE" -i disableAccount`
+fi
+
+if [[ "$ALF_ORG" != "" ]]
+then
+  ALF_JSON=`echo "$ALF_JSON"| $ALF_JSHON -n "$ALF_ORG" -i organization`
+fi
+
+
 if [[ "$ALF_JSON" == "{}" ]]
 then
   echo "at least first name, last name or email as to be set."
@@ -119,6 +149,7 @@ done
 
 __encode_url_param $ALF_USER_NAME
 ALF_ENC_UID=$ENCODED_PARAM
+
 
 echo $ALF_JSON | curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW -H 'Content-Type:application/json' -d@- -X PUT $ALF_EP/service/api/people/$ALF_ENC_UID
 

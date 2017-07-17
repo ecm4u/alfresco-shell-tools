@@ -72,6 +72,7 @@ The available commands are:
 [x]alfListGroups.sh
 [x]alfListTenants.sh
 [x]alfListUsers.sh
+[x]alfListUsersSite.sh
 [x]alfMetadata.sh
 [x]alfMkdir.sh
 [x]alfNodeRef2Path.sh
