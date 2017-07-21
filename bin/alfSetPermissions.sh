@@ -113,7 +113,7 @@ then
 
 	if [ "_$ALF_NODE_ID" = "_" ]
 	then
-		echo "#### ERROR: Not existing path" >&2
+		echo "#### ERROR: Non-existing path" >&2
 		exit 2
 	fi
 	ALF_NODE_ID="workspace/SpacesStore/${ALF_NODE_ID}"
