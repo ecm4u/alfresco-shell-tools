@@ -128,16 +128,21 @@ usage: ./bin/alfSearch.sh [global options] [command specific options] arguments
     ./alfSearch.sh 'TYPE:myns:mydoctype' | wc -l
        --> prints the number of documents of type myns:mydoctype
 
-  side note about the Alfresco search and the implications of the various implementations
+  side note about the Alfresco search and the implications of the
+  various implementations
 
-    If Alfresco uses the LUCENE search backend, the result list will not be stable. This is due
-    to internal performance optimizations done by Alfresco and depends on cache filling levels and
-    system load. As a result the search will return more results on subsequence executions.
+    If Alfresco uses the LUCENE search backend, the result list will
+	not be stable. This is due to internal performance optimizations
+	done by Alfresco and depends on cache filling levels and system
+	load. As a result the search will return more results on
+	subsequence executions.
 
-    If Alfresco is configured to use the SOLR search backend, the result list will be 'eventual consistent'
-    This simple means, the Alfresco content is indexed by a background job in an asynchronous manner and
-    and therefore will not contain all content at any point in time.
-    However, the result list is stable, taking into account what is indexed so far.
+    If Alfresco is configured to use the SOLR search backend, the
+	result list will be 'eventual consistent'. This simple means,
+	the Alfresco content is indexed by a background job in an
+	asynchronous manner and and therefore will not contain all
+	content at any point in time.  However, the result list is
+	stable, taking into account what is indexed so far.
 
   the alfresco shell tools are created by
     lothar.maerkle@ecm4u.de - http://www.ecm4u.de - http://www.ecm-market.de
