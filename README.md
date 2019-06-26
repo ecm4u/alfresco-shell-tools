@@ -62,6 +62,7 @@ The available commands are:
 [x]alfDelete.sh
 [X]alfDeleteSite.sh
 [x]alfDeleteUser.sh
+[x]alfDeleteUserFromSite.sh
 [x]alfGetCompanyHomeNodeRef.sh
 [x]alfGet.sh
 [x]alfGetPermissions.sh

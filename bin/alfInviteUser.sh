@@ -91,6 +91,17 @@ shift $((OPTIND-1))
 
 # command arguments,
 
+case "_${ALF_USER_ROLE}" in
+	_SiteCollaborator|_SiteConsumer|_SiteContributor|_SiteManager)
+		:
+		;;
+	*)
+		echo "ERROR: Incorrect role $ALF_USER_ROLE" >&2
+		__show_command_options
+		exit 1
+		;;
+esac
+
 if $ALF_VERBOSE
 then
   ALF_CURL_OPTS="$ALF_CURL_OPTS -v"
