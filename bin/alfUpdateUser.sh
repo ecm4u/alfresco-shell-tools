@@ -2,7 +2,7 @@
 # set -x
 # param section
 
-# This version: Mon Jul 17 14:13:00 CEST 2017
+# This version: Fri Jan 17 15:12:07 CET 2020
 # spd@daphne.cps.unizar.es
 # Add -o -a options
 
@@ -126,7 +126,7 @@ fi
 
 if [[ "$ALF_ORG" != "" ]]
 then
-  ALF_JSON=`echo "$ALF_JSON"| $ALF_JSHON -n "$ALF_ORG" -i organization`
+  ALF_JSON=`echo "$ALF_JSON"| $ALF_JSHON -s "$ALF_ORG" -i organisation`
 fi
 
 
