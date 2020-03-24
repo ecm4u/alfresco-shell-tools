@@ -85,6 +85,7 @@ The available commands are:
 [x]alfSetPermissions.sh
 [x]alfUpdateUser.sh
 [x]alfUpload.sh
+[X]alfWho.sh
 ```
 
 Note: alfCreateSite.sh alfDeleteSite.sh alfInviteUser.sh are not
