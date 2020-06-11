@@ -2,12 +2,15 @@
 # set -x
 # param section
 
-# This version: Fri Jan 17 15:12:07 CET 2020
+# This version: Tue Jun  9 14:58:48 CEST 2020
 # spd@daphne.cps.unizar.es
 # Add -o -a options
+# Add password change option
 
 # Script to get users for a site
-# Status: working against alfresco-5.1.e with CSRF protection enabled (default)
+# Status:
+#  working against alfresco-5.1.e with CSRF protection enabled (default)
+#  
 
 # Requires alfToolsLib.sh
 # Requires jshon
@@ -26,6 +29,7 @@ function __show_command_options() {
   echo "    -l    Users last name"
   echo "    -e    Users email"
   echo "    -o    Users organization"
+  echo "    -p    Users new password [requires administrator]"
   echo "    -a    Disable Account true|false"
   echo 
 }
@@ -42,13 +46,13 @@ function __show_command_explanation() {
   echo 
 }
 
-ALF_CMD_OPTIONS="${ALF_GLOBAL_OPTIONS}n:p:f:l:e:g:a:o:"
+ALF_CMD_OPTIONS="${ALF_GLOBAL_OPTIONS}n:f:l:e:g:a:o:p:"
 ALF_USER_NAME=""
 ALF_FIRST_NAME=""
 ALF_LAST_NAME=""
 ALF_EMAIL=""
 ALF_ORG=""
-ALF_PASSWD=""
+ALF_USERPW=""
 ALF_ENABLE=""
 ALF_GROUPS=()
 
@@ -66,10 +70,10 @@ function __process_cmd_option() {
       ALF_LAST_NAME=$OPTARG;;
     e)
       ALF_EMAIL=$OPTARG;;
-    p)
-      ALF_PASSWD=$OPTARG;;
     o)
       ALF_ORG=$OPTARG;;
+    p)
+      ALF_USERPW=$OPTARG;;
     a)
       ALF_ENABLE=$OPTARG;;
     g)
@@ -94,6 +98,7 @@ then
   echo "  last name: $ALF_LAST_NAME"
   echo "  enable: $ALF_ENABLE"
   echo "  email: $ALF_EMAIL"
+  echo "  passwd: $ALF_USERPW"
 fi
 
 ALF_JSON='{}'
@@ -130,12 +135,6 @@ then
 fi
 
 
-if [[ "$ALF_JSON" == "{}" ]]
-then
-  echo "at least first name, last name or email as to be set."
-  exit 1
-fi
-
 # TODO Groups
 
 # set groups if any
@@ -150,12 +149,26 @@ done
 __encode_url_param $ALF_USER_NAME
 ALF_ENC_UID=$ENCODED_PARAM
 
+if [[ "$ALF_JSON" == "{}" ]]
+then
+  :
+else
+	echo $ALF_JSON |\
+	curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW \
+	-H 'Content-Type:application/json' \
+	-d@- -X PUT \
+	$ALF_EP/service/api/people/$ALF_ENC_UID
+fi
 
-echo $ALF_JSON | curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW -H 'Content-Type:application/json' -d@- -X PUT $ALF_EP/service/api/people/$ALF_ENC_UID
+if [[ "$ALF_USERPW" != "" ]]
+then
+	ALF_JSON='{}'
+  	ALF_JSON=`echo "$ALF_JSON"| $ALF_JSHON -s "$ALF_USERPW" -i newpw`
 
-
-#{"userName":"lodda","password":"test","firstName":"Lothar","lastName":"MÃ¤rkle","email":"lothar.maerkle@ecm4u.de","disableAccount":false,"quota":-1,"groups":[]}
-#
-#
-#http://localhost:8080/share/proxy/alfresco/api/people
+	echo $ALF_JSON |\
+	curl $ALF_CURL_OPTS -u $ALF_UID:$ALF_PW \
+	-H 'Content-Type:application/json' \
+	-d@- -X POST \
+	$ALF_EP/service/api/person/changepassword/$ALF_ENC_UID
+fi
 
