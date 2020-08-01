@@ -1,8 +1,9 @@
 #!/bin/bash
 
-# Mon Jun 20 14:39:23 CEST 2016
+# Tue Jul 18 10:16:15 CEST 2017
 # Changes: Use jshon instead of awk
 # Changes: Detect locked users
+# Changes: Unlock users
 # spd@daphne.cps.unizar.es
 
 # Script to invite user to alfresco site.
@@ -28,6 +29,7 @@ function __show_command_options() {
   echo "    -l LAST_NAME  , last name"
   echo "    -m MAIL       , e-mail"
   echo "    -r ROLE       , Collaborator|Consumer|Contributor|Manager"
+  echo "    -F            , force invitation and unlock account"
   echo
 }
 
@@ -52,12 +54,13 @@ function __show_command_explanation() {
 
 
 # command local options
-ALF_CMD_OPTIONS="${ALF_GLOBAL_OPTIONS}s:f:l:m:r:"
+ALF_CMD_OPTIONS="${ALF_GLOBAL_OPTIONS}s:f:l:m:r:F"
 ALF_SITE_SHORT_NAME=""
 ALF_USER_FIRST_NAME=""
 ALF_USER_LAST_NAME=""
 ALF_USER_MAIL=""
 ALF_USER_ROLE=""
+ALF_FORCE=false
 
 
 function __process_cmd_option() {
@@ -76,6 +79,8 @@ function __process_cmd_option() {
       ALF_USER_MAIL=$OPTARG;;
     r)
       ALF_USER_ROLE="Site$OPTARG";;
+    F)
+      ALF_FORCE=: ;;
   esac
 }
 
@@ -85,6 +90,17 @@ __process_options "$@"
 shift $((OPTIND-1))
 
 # command arguments,
+
+case "_${ALF_USER_ROLE}" in
+	_SiteCollaborator|_SiteConsumer|_SiteContributor|_SiteManager)
+		:
+		;;
+	*)
+		echo "ERROR: Incorrect role $ALF_USER_ROLE" >&2
+		__show_command_options
+		exit 1
+		;;
+esac
 
 if $ALF_VERBOSE
 then
@@ -127,8 +143,14 @@ then
 		
 	if [ _"$ALF_LOCKED" = "_false" ]	
 	then
-		echo "#### ERROR: ${ALF_USERNAME} exists but is locked" >&2
-		exit 1
+		if $ALF_FORCE
+		then
+			echo "#### WARNING: ${ALF_USERNAME} exists but is locked" >&2
+			alfUpdateUser.sh -a false -n ${ALF_USERNAME}
+		else
+			echo "#### ERROR: ${ALF_USERNAME} exists but is locked" >&2
+			exit 1
+		fi
 	fi
 
 else
